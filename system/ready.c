@@ -3,6 +3,7 @@
 #include <xinu.h>
 
 qid16	readylist;			/* Index of ready list		*/
+qid16   userlist;
 
 /*------------------------------------------------------------------------
  *  ready  -  Make a process eligible for CPU service
@@ -23,7 +24,12 @@ status	ready(
 	prptr = &proctab[pid];
 	prptr->prstate = PR_READY;
 	kprintf("In ready : %s,%d\n",prptr->prname,prptr->sys_call);
-	insert(pid, readylist, prptr->prprio);
+	if(prptr->sys_call == 1){
+		insert(pid, readylist, prptr->prprio);
+	}
+	else{
+		insert_list(pid,userlist,prptr->tickets_num);
+	}
 	resched();
 
 	return OK;
