@@ -50,3 +50,33 @@ pid32	dequeue(
 	queuetab[pid].qnext = EMPTY;
 	return pid;
 }
+
+void	dequeue_list(
+	pid32		pid,		/* ID queue to use		*/
+	qid16		q		/* ID queue to use		*/
+	)
+{
+	//kprintf("Request to dequeue %d\n", pid);
+	pid32 pid_lookup;
+	pid32 pid_prev;
+	pid32 pid_next;
+	if (isbadqid(q)) {
+		return SYSERR;
+	} else if (isempty(q)) {
+		return EMPTY;
+	}
+	pid_lookup = firstid(q);
+	while(pid_lookup != pid)
+	{
+		//printf("Trying to dequeue ");
+		pid_lookup = queuetab[pid_lookup].qnext;
+	}
+	//struct procent* entry = &proctab[pid_lookup];
+	//total_tickets = total_tickets - entry->tickets_num;
+	pid_prev = queuetab[pid].qprev;
+	pid_next = queuetab[pid].qnext;	/* Following node in list	*/
+	//kprintf("Next pid is %d and prev pid is \n", pid_next, pid_prev);
+	queuetab[pid_prev].qnext = pid_next;
+	queuetab[pid_next].qprev = pid_prev;
+	return;
+}

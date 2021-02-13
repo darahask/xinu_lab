@@ -20,7 +20,12 @@ syscall	kill(
 		restore(mask);
 		return SYSERR;
 	}
-
+  if(prptr->sys_call == 0)
+  {
+    total_tickets = total_tickets - prptr->tickets_num;
+  	kprintf("total_tickets in kill is %d\n", total_tickets);
+    //dequeue_list(currpid, userlist);
+  }
 	if (--prcount <= 1) {		/* Last user process completes	*/
 		xdone();
 	}

@@ -61,6 +61,8 @@ extern	uint32	dot2ip(char *, uint32 *);
 /* in file getticks.c */
 extern	uint64	getticks(void);
 
+extern void	dequeue_list(pid32 pid, qid16 q);
+
 /* in file intutils.S */
 extern	intmask	disable(void);
 
