@@ -14,8 +14,9 @@ status	insert(
 {
 	int16	curr;			/* Runs through items in a queue*/
 	int16	prev;			/* Holds previous node index	*/
-
+	kprintf("Inside insert\n");
 	if (isbadqid(q) || isbadpid(pid)) {
+		kprintf("Inside insert errorn %d,,,%d\n",isbadqid(q),isbadpid(pid));
 		return SYSERR;
 	}
 
@@ -32,6 +33,7 @@ status	insert(
 	queuetab[pid].qkey = key;
 	queuetab[prev].qnext = pid;
 	queuetab[curr].qprev = pid;
+	kprintf("Inserted ticket:%d,%d\n",queuetab[pid].qkey,queuetab[pid].qnext);
 	return OK;
 }
 

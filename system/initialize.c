@@ -213,7 +213,7 @@ static	void	sysinit()
 	readylist = newqueue();
 	kprintf("debug 2\n");
 	//userlist = newqueue();
-	kprintf("debug 3\n");
+	
 
 	/* initialize the PCI bus */
 
@@ -222,6 +222,8 @@ static	void	sysinit()
 	/* Initialize the real time clock */
 
 	clkinit();
+	userlist = newqueue();
+	kprintf("debug 3\n");
 
 	for (i = 0; i < NDEVS; i++) {
 		init(i);

@@ -28,7 +28,7 @@ status	ready(
 		insert(pid, readylist, prptr->prprio);
 	}
 	else{
-		insert_list(pid,userlist,prptr->tickets_num);
+		insert(pid,userlist,prptr->tickets_num);
 	}
 	resched();
 
