@@ -75,17 +75,17 @@ void	nulluser()
 		(uint32)&data, (uint32)&ebss - 1);
 
 	/* Enable interrupts */
-
 	enable();
 
 	/* Initialize the network stack and start processes */
-
+	kprintf("debug 4\n");
 	net_init();
-
+	kprintf("debug 5\n");
 	/* Create a process to finish startup and start main */
-
+    
 	resume(create((void *)startup, INITSTK, INITPRIO,
 					"Startup process", 0, NULL));
+	kprintf("debug 6\n");
 
 	/* Become the Null process (i.e., guarantee that the CPU has	*/
 	/*  something to run when no other process is ready to execute)	*/
@@ -209,8 +209,11 @@ static	void	sysinit()
 
 	/* Create a ready list for processes */
 
+	kprintf("debug 1\n");
 	readylist = newqueue();
-
+	kprintf("debug 2\n");
+	//userlist = newqueue();
+	kprintf("debug 3\n");
 
 	/* initialize the PCI bus */
 

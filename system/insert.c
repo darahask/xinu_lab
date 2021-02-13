@@ -49,13 +49,15 @@ status	insert_list(
 		return SYSERR;
 	}
 	curr = firstid(q);
-	//kprintf("First ID in queue is %d\n", curr);
+	kprintf("First ID in queue is %d\n", curr);
 	while (queuetab[curr].qkey > key) {
+		kprintf("Inside 1\n");
 		curr = queuetab[curr].qnext;
 	}
 	//Added recently
 	while(queuetab[curr].qkey == key)
 	{
+		kprintf("Inside 2\n");
 		if(pid > curr){
 			break;
 		}	

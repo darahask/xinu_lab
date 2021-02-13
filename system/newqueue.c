@@ -17,7 +17,7 @@ qid16	newqueue(void)
 	}
 
 	nextqid += 2;			/* Increment index for next call*/
-
+	kprintf("Q tag: %d\n",nextqid);
 	/* Initialize head and tail nodes to form an empty queue */
 
 	queuetab[queuehead(q)].qnext = queuetail(q);
