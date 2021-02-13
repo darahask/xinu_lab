@@ -41,8 +41,14 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
 	ptnew = &proctab[currpid];
 	ptnew->prstate = PR_CURR;
 
-	kprintf("Context Switch:%s,%s",ptold->prname,ptnew->prname);
-	
+	if(ptold->sys_call == 0){
+	    kprintf("Tickets of %s:%d,%d\n",ptold->prname,ptold->tickets_start,ptold->tickets_end);
+	}
+	if(ptnew->sys_call == 0){
+	    kprintf("Tickets of %s:%d,%d\n",ptnew->prname,ptnew->tickets_start,ptnew->tickets_end);
+	}
+	kprintf("Context Switch:%s,%s\n",ptold->prname,ptnew->prname);
+
 	preempt = QUANTUM;		/* Reset time slice for process	*/
 	ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
 

@@ -3,18 +3,18 @@
 #include <xinu.h>
 
 local int newpid();
-// uint32 total_tickets;
+uint32 total_tickets;
 
-// void set_tickets(pid32 id, uint32 tickets){
-// 	if(isbadpid(id))
-// 		return;
-// 	struct procent* entry = &proctab[id];
-// 	entry->tickets_start += total_tickets;
-// 	total_tickets+=tickets;
-// 	entry->tickets_end= total_tickets;
-// 	entry->tickets_num = tickets;
-// return;
-// }
+void set_tickets(pid32 id, uint32 tickets){
+	if(isbadpid(id))
+		return;
+	struct procent* entry = &proctab[id];
+	entry->tickets_start += total_tickets;
+	total_tickets+=tickets;
+	entry->tickets_end= total_tickets;
+	entry->tickets_num = tickets;
+return;
+}
 
 /*------------------------------------------------------------------------
  *  create  -  Create a process to start running a function on x86
@@ -23,7 +23,7 @@ local int newpid();
 pid32	create_user_proc(
 	  void		*funcaddr,	/* Address of the function	*/
 	  uint32	ssize,		/* Stack size in bytes		*/
-	  uint32    priority,
+	  uint32    tickets,
 	  char		*name,		/* Name (for debugging)		*/
 	  uint32	nargs,		/* Number of args that follow	*/
 	  ...
@@ -60,7 +60,9 @@ pid32	create_user_proc(
 	prptr->tickets_start = 0;
 	prptr->tickets_end = 0;
 	prptr->tickets_num = 0;
-    prptr->prprio = priority;
+
+    set_tickets(pid,tickets);
+
 	for (i=0 ; i<PNMLEN-1 && (prptr->prname[i]=name[i])!=NULLCH; i++)
 		;
 	prptr->prsem = -1;
